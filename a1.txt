@@ -2,4 +2,8 @@ hola me acaban de crear
 primera modificacion
 segunda modificaciong
 
+segunda modificacion
+
+creada rama tar1 
+
 creada rama tar2
