@@ -1,0 +1,18 @@
+[
+    {
+        "clave": "total",
+        "titulo": "Total"
+    },
+    {
+        "clave": "Pendiente",
+        "titulo": "Pendientes"
+    },
+    {
+        "clave": "Reservado",
+        "titulo": "Reservados"
+    },
+    {
+        "clave": "media",
+        "titulo": "Media"
+    }
+]

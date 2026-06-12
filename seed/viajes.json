@@ -1,0 +1,50 @@
+[
+    {
+        "id": 1,
+        "destino": "Cork",
+        "pais": "Irlanda",
+        "imagen": "img/cork.png",
+        "alt": "Vista de Cork en Irlanda",
+        "detalles": {
+            "descripcion": "Ciudad con mucho encanto, ambiente local y rincones perfectos para descubrir Irlanda.",
+            "fecha": "2026-04-15",
+            "duracion": 5,
+            "presupuesto": 575,
+            "tipo": "Ciudad",
+            "estado": "Pendiente",
+            "favorito": true
+        }
+    },
+    {
+        "id": 2,
+        "destino": "Chefchaouen",
+        "pais": "Marruecos",
+        "imagen": "img/chefchaouen.png",
+        "alt": "Calles azules de Chefchaouen en Marruecos",
+        "detalles": {
+            "descripcion": "El famoso pueblo azul, lleno de calles, escaleras y puertas con una identidad única.",
+            "fecha": "2026-07-10",
+            "duracion": 7,
+            "presupuesto": 385,
+            "tipo": "Aventura",
+            "estado": "Visitado",
+            "favorito": true
+        }
+    },
+    {
+        "id": 3,
+        "destino": "Londres",
+        "pais": "Reino Unido",
+        "imagen": "img/londres.png",
+        "alt": "Monumentos famosos de Londres",
+        "detalles": {
+            "descripcion": "Una ciudad icónica con historia, cultura, monumentos famosos y mucha vida urbana.",
+            "fecha": "2026-07-15",
+            "duracion": 5,
+            "presupuesto": 650,
+            "tipo": "Ciudad",
+            "estado": "Reservado",
+            "favorito": true
+        }
+    }
+]

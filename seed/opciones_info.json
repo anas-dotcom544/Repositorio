@@ -1,0 +1,14 @@
+[
+    {
+        "titulo": "Destinos",
+        "texto": "Guarda los lugares que quieres visitar y consulta toda la información cuando la necesites."
+    },
+    {
+        "titulo": "Presupuestos",
+        "texto": "Controla el dinero estimado para cada viaje y calcula el presupuesto total de tus planes."
+    },
+    {
+        "titulo": "Favoritos",
+        "texto": "Marca con una estrella los viajes que más te ilusionan para encontrarlos fácilmente."
+    }
+]

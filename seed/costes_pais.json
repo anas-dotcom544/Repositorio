@@ -1,0 +1,42 @@
+[
+    {
+        "pais": "España",
+        "coste_diario": 80
+    },
+    {
+        "pais": "Portugal",
+        "coste_diario": 85
+    },
+    {
+        "pais": "Italia",
+        "coste_diario": 95
+    },
+    {
+        "pais": "Francia",
+        "coste_diario": 110
+    },
+    {
+        "pais": "Irlanda",
+        "coste_diario": 115
+    },
+    {
+        "pais": "Reino Unido",
+        "coste_diario": 130
+    },
+    {
+        "pais": "Marruecos",
+        "coste_diario": 55
+    },
+    {
+        "pais": "Alemania",
+        "coste_diario": 105
+    },
+    {
+        "pais": "Países Bajos",
+        "coste_diario": 120
+    },
+    {
+        "pais": "Japón",
+        "coste_diario": 140
+    }
+]

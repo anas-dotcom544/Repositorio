@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Planificador de Viajes</title>
+        
+        <!--Enlace para libreria de Bootstrap-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="style.css"/>
+
+    </head>
+
+    <body class="pagina-index">
+        <div id="contenedor-header"></div>
+
+        <main>
+            <section class="container seccion-info">
+                <h2>¿Qué puedes organizar?</h2>
+                <div id="contenedor-info" class="row mt-4"></div>
+            </section>
+
+            <section class="container seccion-destinos">
+                <h2>Destinos destacados</h2>
+
+                <p class="texto-seccion">Algunos lugares que pueden inspirarte para tu próxima aventura.</p>
+
+                <div id="contenedor-destinos" class="row mt-4"></div>
+            </section>
+
+        </main>
+
+        <div id="contenedor-footer"></div>
+
+        <!--Sirve para conectar mi archivo js con mi pagina html-->
+
+        <script src="config.js"></script>
+
+        <script src="api.js"></script>
+        <script src="estructura.js"></script>
+        
+        <!--Como el navbar se crea en estructura.js lo ponemos despues-->
+        <!-- Cargo auth.js para usar login, registro, logout y perfil -->
+        <script src="auth.js"></script>
+        <!-- Cargo navbar-auth.js para mostrar Login, Registro o Cerrar sesión según el usuario --> 
+        <script src="navbar-auth.js"></script>
+
+        <script src="modal.js"></script>
+        <script src="campos.js"></script>
+        <script src="formulario.js"></script>
+        <script src="paginacion.js"></script>
+        <script src="filtros.js"></script>
+        <script src="app.js"></script>
+
+    </body>
+</html>
