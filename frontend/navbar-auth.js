@@ -20,6 +20,7 @@ async function actualizarNavbarAuth() {
 
             if (usuarioNavbar) {
                 usuarioNavbar.textContent = "🧭 " + usuario.nombre;
+                usuarioNavbar.setAttribute("href", "perfil.html");
                 usuarioNavbar.classList.remove("d-none");
             }
         } else {

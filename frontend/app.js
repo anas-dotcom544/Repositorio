@@ -10,6 +10,9 @@ let contenedores = {
     paginacion: document.querySelector("#paginacion-viajes")
 };
 
+//Variable para guardar el usuario conectado
+let usuarioConectadoApp = null;
+
 //Objeto para gestionar la lista de viajes que viene del backend
 let gestorViajes = {
     lista: [],
@@ -293,6 +296,37 @@ function obtenerViajesFiltrados() {
     return viajesFiltrados;
 }
 
+//Funcion para cargar el usuario conectado en app.js
+async function cargarUsuarioConectadoApp() {
+    try {
+        let resultado = await auth.perfil();
+
+        if (resultado.respuesta.ok) {
+            usuarioConectadoApp = resultado.datos.usuario;
+        }
+    } catch (error) {
+        usuarioConectadoApp = null;
+    }
+}
+
+
+//Funcion para saber si un viaje se debe mostrar como recomendacion
+function viajeEsRecomendacion(viaje) {
+    if (viaje.destacado == true) {
+        return true;
+    }
+
+    if (viaje.solo_lectura == true) {
+        return true;
+    }
+
+    if (usuarioConectadoApp && usuarioConectadoApp.rol == "admin") {
+        return true;
+    }
+
+    return false;
+}
+
 //Funcion para crear el html de una carta de viaje
 function crearHtmlViaje(viaje) {
     let detalles = viaje.detalles || {};
@@ -306,6 +340,25 @@ function crearHtmlViaje(viaje) {
     }
 
     let botonesEditarEliminar = "";
+
+    let listaDatosViaje = "";
+
+    if (viajeEsRecomendacion(viaje)) {
+        listaDatosViaje = `
+            <li><strong>Mejor época:</strong> ${detalles.fecha || "Todo el año"}</li>
+            <li><strong>Duración recomendada:</strong> ${detalles.duracion || 0} días</li>
+            <li><strong>Presupuesto estimado:</strong> ${detalles.presupuesto || 0} €</li>
+            <li><strong>Tipo:</strong> ${detalles.tipo || "Sin tipo"}</li>
+        `;
+    } else {
+        listaDatosViaje = `
+            <li><strong>Fecha:</strong> ${detalles.fecha || "Sin fecha"}</li>
+            <li><strong>Duración:</strong> ${detalles.duracion || 0} días</li>
+            <li><strong>Presupuesto:</strong> ${detalles.presupuesto || 0} €</li>
+            <li><strong>Tipo:</strong> ${detalles.tipo || "Sin tipo"}</li>
+            <li><strong>Estado:</strong> ${detalles.estado || "Sin estado"}</li>
+        `;
+    }
 
     if (!viaje.destacado && !viaje.solo_lectura) {
         botonesEditarEliminar = `
@@ -347,12 +400,9 @@ function crearHtmlViaje(viaje) {
                         ${detalles.descripcion || "Viaje sin descripción."}
                     </p>
 
+                    
                     <ul class="datos-viaje">
-                        <li><strong>Fecha:</strong> ${detalles.fecha || "Sin fecha"}</li>
-                        <li><strong>Duración:</strong> ${detalles.duracion || 0} días</li>
-                        <li><strong>Presupuesto:</strong> ${detalles.presupuesto || 0} €</li>
-                        <li><strong>Tipo:</strong> ${detalles.tipo || "Sin tipo"}</li>
-                        <li><strong>Estado:</strong> ${detalles.estado || "Sin estado"}</li>
+                        ${listaDatosViaje}
                     </ul>
 
                     <div class="botones-card">
@@ -623,6 +673,19 @@ let camposFormularioCrear = {
     descripcion: document.getElementById("notas")
 };
 
+//Funcion para decidir el estado al crear un viaje
+function obtenerEstadoFormularioSegunUsuario() {
+    if (usuarioConectadoApp && usuarioConectadoApp.rol == "admin") {
+        return "Pendiente";
+    }
+
+    if (!camposFormularioCrear.estado || camposFormularioCrear.estado.value == "") {
+        return "Pendiente";
+    }
+
+    return camposFormularioCrear.estado.value;
+}
+
 //Funcion para recoger datos del formulario principal
 function recogerNuevoViajeFormulario() {
     return {
@@ -636,7 +699,7 @@ function recogerNuevoViajeFormulario() {
             duracion: Number(camposFormularioCrear.duracion.value),
             presupuesto: camposFormularioCrear.presupuesto.value,
             tipo: camposFormularioCrear.tipo.value,
-            estado: camposFormularioCrear.estado.value,
+            estado: obtenerEstadoFormularioSegunUsuario(),
             favorito: false
         }
     };
@@ -668,6 +731,8 @@ async function enviarFormularioCrear(evento) {
     }
 
     let nuevoViaje = recogerNuevoViajeFormulario();
+
+    console.log("Viaje que se va a enviar:", nuevoViaje);
 
     let creado = await crearViajeBackend(nuevoViaje);
 
@@ -1104,6 +1169,26 @@ function cargarOpcionesSelects() {
     }
 }
 
+//Funcion para ocultar el campo estado cuando el usuario es admin
+function ajustarFormularioSegunUsuario() {
+    if (!usuarioConectadoApp || usuarioConectadoApp.rol != "admin") {
+        return;
+    }
+
+    if (!camposFormularioCrear.estado) {
+        return;
+    }
+
+    let contenedorEstado = camposFormularioCrear.estado.closest(".col-md-6");
+
+    if (contenedorEstado) {
+        contenedorEstado.classList.add("d-none");
+    }
+
+    camposFormularioCrear.estado.removeAttribute("required");
+    camposFormularioCrear.estado.value = "Recomendado";
+}
+
 //Funcion para iniciar la pagina
 async function iniciarApp() {
     pintarHeader();
@@ -1115,6 +1200,9 @@ async function iniciarApp() {
 
     await cargarTarjetasPresupuesto();
 
+    await cargarUsuarioConectadoApp();
+    ajustarFormularioSegunUsuario();
+
     configurarFiltros();
     configurarPaginacion();
     configurarFormularioCrear();
@@ -1124,7 +1212,7 @@ async function iniciarApp() {
     configurarModalConfirmarEliminar();
 
     //Cargamos los viajes desde Flask
-    cargarViajesBackend(false);
+    await cargarViajesBackend(false);
 
     //Carga primero js y luego lo demas para que no tarde en hacerlo
     document.body.classList.add("pagina-cargada");

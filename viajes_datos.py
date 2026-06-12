@@ -289,7 +289,11 @@ def obtener_viajes_visibles_cliente(usuario_id):
     conexion = obtener_conexion()
     cursor = conexion.cursor()
 
-    #El cliente ve viajes generales, destacados, suyos y los creados por admin
+    #El cliente ve:
+    #1. Sus propios viajes
+    #2. Viajes generales sin usuario
+    #3. Viajes creados por admin
+    #Pero no ve viajes creados por otros clientes
     cursor.execute("""
         SELECT
             v.id,
@@ -313,7 +317,6 @@ def obtener_viajes_visibles_cliente(usuario_id):
         LEFT JOIN roles r ON u.rol_id = r.id
         WHERE v.usuario_id IS NULL
            OR v.usuario_id = %s
-           OR v.destacado = true
            OR r.nombre = 'admin'
         ORDER BY v.id;
     """, (usuario_id,))

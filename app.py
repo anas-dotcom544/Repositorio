@@ -185,7 +185,10 @@ def validar_viaje(viaje):
     if not isinstance(viaje["detalles"], dict):
         return "El campo 'detalles' debe ser un objeto"
 
-    detalles_obligatorios = ["fecha", "duracion", "tipo", "estado"]
+    detalles_obligatorios = ["fecha", "duracion", "tipo"]
+
+    if not usuario_es_admin():
+        detalles_obligatorios.append("estado")
 
     for campo in detalles_obligatorios:
         valor = viaje["detalles"].get(campo)
@@ -220,6 +223,9 @@ def completar_viaje(viaje):
             coste_diario = 90
 
         viaje["detalles"]["presupuesto"] = coste_diario * duracion
+
+    if usuario_es_admin():
+        viaje["detalles"]["estado"] = "Pendiente"
 
     if "favorito" not in viaje["detalles"]:
         viaje["detalles"]["favorito"] = False

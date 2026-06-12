@@ -1,6 +1,14 @@
+//Funcion para obtener los contenedores comunes sin crear conflictos
+function obtenerContenedoresEstructura() {
+    return {
+        header: document.querySelector("#contenedor-header"),
+        footer: document.querySelector("#contenedor-footer")
+    };
+}
 
 //Funcion para pintar el header del index
 function pintarHeaderIndex() {
+    const contenedores = obtenerContenedoresEstructura();
     contenedores.header.innerHTML = `
         <header class="cabecera-principal">
             <nav class="navbar navbar-expand-lg navbar-viajes">
@@ -17,9 +25,10 @@ function pintarHeaderIndex() {
                             <a class="nav-link enlace-navbar active" href="index.html">Inicio</a>
                             <a class="nav-link enlace-navbar" href="viajes.html">Mis viajes</a>
                             <a class="nav-link enlace-navbar" href="favoritos.html">Favoritos</a>
-                            <span class="usuario-navbar d-none" id="usuario-navbar">
+
+                            <a class="usuario-navbar d-none" id="usuario-navbar" href="perfil.html">
                                 🧭 Usuario
-                            </span>
+                            </a>
                             <a class="btn btn-login-navbar" href="login.html" id="enlace-login">
                                 👤 Login
                             </a>
@@ -72,6 +81,7 @@ function pintarHeaderIndex() {
 
 //Funcion para pintar el header de viajes
 function pintarHeaderViajes() {
+    const contenedores = obtenerContenedoresEstructura();
     contenedores.header.innerHTML = `
         <header class="cabecera-viajes">
             <nav class="navbar navbar-expand-lg navbar-viajes">
@@ -90,9 +100,9 @@ function pintarHeaderViajes() {
                             <a class="nav-link enlace-navbar active" href="viajes.html">Mis viajes</a>
                             <a class="nav-link enlace-navbar" href="favoritos.html">Favoritos</a>
 
-                            <span class="usuario-navbar d-none" id="usuario-navbar">
+                            <a class="usuario-navbar d-none" id="usuario-navbar" href="perfil.html">
                                 🧭 Usuario
-                            </span>
+                            </a>
 
                             <button class="btn btn-logout-navbar d-none" id="boton-logout" type="button">
                                 Salir
@@ -116,6 +126,7 @@ function pintarHeaderViajes() {
 
 //Funcion para pintar el header de favoritos
 function pintarHeaderFavoritos() {
+    const contenedores = obtenerContenedoresEstructura();
     contenedores.header.innerHTML = `
         <header class="cabecera-viajes">
             <nav class="navbar navbar-expand-lg navbar-viajes">
@@ -134,9 +145,9 @@ function pintarHeaderFavoritos() {
                             <a class="nav-link enlace-navbar" href="viajes.html">Mis viajes</a>
                             <a class="nav-link enlace-navbar active" href="favoritos.html">Favoritos</a>
 
-                            <span class="usuario-navbar d-none" id="usuario-navbar">
+                            <a class="usuario-navbar d-none" id="usuario-navbar" href="perfil.html">
                                 🧭 Usuario
-                            </span>
+                            </a>
 
                             <button class="btn btn-logout-navbar d-none" id="boton-logout" type="button">
                                 Salir
@@ -155,9 +166,54 @@ function pintarHeaderFavoritos() {
     `;
 }
 
+//Funcion para pintar el header de perfil
+function pintarHeaderPerfil() {
+    const contenedores = obtenerContenedoresEstructura();
+    contenedores.header.innerHTML = `
+        <header class="cabecera-viajes">
+            <nav class="navbar navbar-expand-lg navbar-viajes">
+                <div class="container">
+                    <a class="navbar-brand logo-web" href="index.html">
+                        <img src="img/logo.png" alt="Logo de Planificador de Viajes">
+                    </a>
+
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="menuPrincipal">
+                        <div class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+                            <a class="nav-link enlace-navbar" href="index.html">Inicio</a>
+                            <a class="nav-link enlace-navbar" href="viajes.html">Mis viajes</a>
+                            <a class="nav-link enlace-navbar" href="favoritos.html">Favoritos</a>
+
+                            <a class="usuario-navbar d-none" id="usuario-navbar" href="perfil.html">
+                                🧭 Usuario
+                            </a>
+
+                            <button class="btn btn-logout-navbar d-none" id="boton-logout" type="button">
+                                Salir
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <section class="container hero-viajes">
+                <h1>Mi perfil</h1>
+                <p>
+                    Consulta tus datos personales y el resumen de tus viajes.
+                </p>
+            </section>
+        </header>
+    `;
+}
+
 
 //Funcion para elegir que header se pinta segun la pagina
 function pintarHeader() {
+    const contenedores = obtenerContenedoresEstructura();
+
     if (!contenedores.header) {
         return;
     }
@@ -173,11 +229,17 @@ function pintarHeader() {
     if (document.body.classList.contains("pagina-favoritos")) {
         pintarHeaderFavoritos();
     }
+
+    if (document.body.classList.contains("pagina-perfil")) {
+        pintarHeaderPerfil();
+    }
 }
 
 
 //Footer comun
 function pintarFooter() {
+    const contenedores = obtenerContenedoresEstructura();
+
     if (!contenedores.footer) {
         return;
     }
