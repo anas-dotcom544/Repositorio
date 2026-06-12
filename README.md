@@ -22,10 +22,9 @@ El proyecto une un frontend hecho con HTML, CSS, JavaScript y Bootstrap con un b
 - JWT
 - Git y GitHub
 
----
-
 * Estructura del proyecto
 
+```text
 fase4_fullstack/
 ├── app.py
 ├── db.py
@@ -66,8 +65,7 @@ fase4_fullstack/
     ├── paginacion.js
     ├── style.css
     └── img/
-
----
+```
 
 * Qué hace la aplicación
 
