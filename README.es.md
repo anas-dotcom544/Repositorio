@@ -1,3 +1,5 @@
+[🇬🇧 English](README.md) | **Español**
+
 # Proyecto Planificador de Viajes
 
 Este proyecto es una aplicación fullstack de planificación de viajes.
