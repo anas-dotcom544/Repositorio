@@ -8,9 +8,9 @@ Permite ver viajes, registrarse, iniciar sesión, cerrar sesión, gestionar viaj
 
 El proyecto une un frontend hecho con HTML, CSS, JavaScript y Bootstrap con un backend hecho con Flask y una base de datos PostgreSQL levantada con Docker.
 
-----
+---
 
-* Tecnologías usadas
+## Tecnologías usadas
 
 - HTML
 - CSS
@@ -24,7 +24,9 @@ El proyecto une un frontend hecho con HTML, CSS, JavaScript y Bootstrap con un b
 - JWT
 - Git y GitHub
 
-* Estructura del proyecto
+---
+
+## Estructura del proyecto
 
 ```text
 fase4_fullstack/
@@ -69,27 +71,29 @@ fase4_fullstack/
     └── img/
 ```
 
-* Qué hace la aplicación
+---
+
+## Qué hace la aplicación
 
 La aplicación permite:
 
-ver viajes disponibles  
-ver viajes destacados  
-registrarse  
-iniciar sesión  
-cerrar sesión  
-ver el perfil del usuario conectado  
-crear viajes  
-editar viajes  
-eliminar viajes  
-marcar viajes como favoritos  
-buscar y filtrar viajes  
-ver viajes favoritos en una página separada  
+- ver viajes disponibles
+- ver viajes destacados
+- registrarse
+- iniciar sesión
+- cerrar sesión
+- ver el perfil del usuario conectado
+- crear viajes
+- editar viajes
+- eliminar viajes
+- marcar viajes como favoritos
+- buscar y filtrar viajes
+- ver viajes favoritos en una página separada
 
 También tiene usuarios con roles:
 
-cliente  
-admin  
+- cliente
+- admin
 
 El cliente puede gestionar sus propios viajes.
 
@@ -97,16 +101,16 @@ El administrador puede ver y gestionar más viajes.
 
 ---
 
-* Base de datos 
+## Base de datos
 
 Uso PostgreSQL como base de datos.
 
 Las tablas principales son:
 
-usuarios  
-roles  
-viajes  
-costes_pais  
+- `usuarios`
+- `roles`
+- `viajes`
+- `costes_pais`
 
 La tabla usuarios guarda los usuarios registrados.
 
@@ -120,39 +124,43 @@ La base de datos se levanta con Docker.
 
 En mi caso uso el puerto externo 5433 para evitar conflictos con otros PostgreSQL instalados en el ordenador.
 
-Datos recomendados para DBeaver:
+### Datos recomendados para DBeaver
 
-Host: 127.0.0.1  
-Port: 5433  
-Database: planificador_viajes  
-Username: user  
-Password: 123456  
+```text
+Host: 127.0.0.1
+Port: 5433
+Database: planificador_viajes
+Username: user
+Password: 123456
+```
 
 ---
 
-* Variables de entorno
+## Variables de entorno
 
 El archivo `.env` se usa para guardar datos privados y no se sube al repositorio.
 
 Para saber qué variables necesita el proyecto he dejado un archivo `.env.example`.
 
-Ejemplo:
+### Ejemplo
 
-DB_HOST=127.0.0.1  
-DB_PORT=5433  
-DB_NAME=planificador_viajes  
-DB_USER=user  
-DB_PASSWORD=123456  
+```env
+DB_HOST=127.0.0.1
+DB_PORT=5433
+DB_NAME=planificador_viajes
+DB_USER=user
+DB_PASSWORD=123456
 
-FLASK_SECRET_KEY=cambia_esta_clave  
-JWT_SECRET_KEY=cambia_esta_clave_jwt  
-JWT_EXPIRATION_HOURS=2  
+FLASK_SECRET_KEY=cambia_esta_clave
+JWT_SECRET_KEY=cambia_esta_clave_jwt
+JWT_EXPIRATION_HOURS=2
+```
 
 ---
 
-* Seguridad
+## Seguridad
 
-La clave secreta de Flask ya no está escrita directamente en app.py, ahora se lee desde el archivo `.env`.
+La clave secreta de Flask ya no está escrita directamente en `app.py`, ahora se lee desde el archivo `.env`.
 
 Las contraseñas de los usuarios se guardan cifradas usando hash.
 
@@ -160,76 +168,86 @@ En el login se comprueba la contraseña cifrada y no se compara texto plano.
 
 También se ha añadido JWT para trabajar mejor como API REST.
 
-Cuando el usuario inicia sesión, el backend devuelve un token y el frontend lo guarda en localStorage.
+Cuando el usuario inicia sesión, el backend devuelve un token y el frontend lo guarda en `localStorage`.
 
-Después, para crear, editar, eliminar o guardar favoritos, el frontend manda el token en la cabecera Authorization.
+Después, para crear, editar, eliminar o guardar favoritos, el frontend manda el token en la cabecera `Authorization`.
 
 También se siguen usando sesiones de Flask como apoyo.
 
 ---
 
-* Endpoints principales
+## Endpoints principales
 
-**Usuarios**
+### Usuarios
 
-POST /auth/signup  
+**POST `/auth/signup`**  
 Registra un usuario nuevo.
 
-POST /auth/login  
+**POST `/auth/login`**  
 Inicia sesión y devuelve un token JWT.
 
-GET /auth/perfil  
+**GET `/auth/perfil`**  
 Devuelve el usuario conectado.
 
-POST /auth/logout  
+**POST `/auth/logout`**  
 Cierra la sesión.
 
-GET /auth/admin  
+**GET `/auth/admin`**  
 Ruta protegida solo para administradores.
 
-**Viajes**
+### Viajes
 
-GET /viajes  
+**GET `/viajes`**  
 Devuelve los viajes.
 
-GET /viajes/destacados  
+**GET `/viajes/destacados`**  
 Devuelve los viajes destacados.
 
-GET /viajes/<id>  
+**GET `/viajes/<id>`**  
 Devuelve un viaje concreto.
 
-POST /viajes  
+**POST `/viajes`**  
 Crea un viaje nuevo. Hay que estar logueado.
 
-PUT /viajes/<id>  
+**PUT `/viajes/<id>`**  
 Edita un viaje. Hay que estar logueado.
 
-DELETE /viajes/<id>  
+**DELETE `/viajes/<id>`**  
 Elimina un viaje. Hay que estar logueado.
 
 ---
 
-* Cómo ejecutar el proyecto
+## Cómo ejecutar el proyecto
 
 Primero levanto la base de datos con Docker:
 
-**docker compose up -d**
+```bash
+docker compose up -d
+```
 
 Después creo las tablas:
 
-**python migration.py**
+```bash
+python migration.py
+```
 
 Luego inserto los datos iniciales:
 
-**python insertar_datos.py**
+```bash
+python insertar_datos.py
+```
 
 Creo el usuario administrador:
 
-**python crear_admin.py**
+```bash
+python crear_admin.py
+```
 
 Y por último inicio Flask:
 
-**python app.py**
+```bash
+python app.py
+```
 
 El backend se ejecuta en:
 
@@ -239,59 +257,65 @@ Para abrir el frontend uso los archivos HTML que están dentro de la carpeta fro
 
 Por ejemplo:
 
-frontend/index.html  
-frontend/viajes.html  
-frontend/login.html  
-frontend/signup.html  
+- `frontend/index.html`
+- `frontend/viajes.html`
+- `frontend/login.html`
+- `frontend/signup.html`
 
 ---
 
-* Si se borra la base de datos
+## Si se borra la base de datos
 
 Si ejecuto:
 
-**docker compose down**
+```bash
+docker compose down
+```
 
 se borra el contenedor, pero normalmente se mantienen los datos porque el volumen sigue existiendo.
 
 Si ejecuto:
 
-**docker compose down -v**
+```bash
+docker compose down -v
+```
 
 se borra también el volumen y se pierden las tablas, viajes y usuarios.
 
 Después de borrar el volumen hay que ejecutar otra vez:
 
-**python migration.py**  
-**python crear_admin.py**  
-**python insertar_datos.py**
+```bash
+python migration.py
+python crear_admin.py
+python insertar_datos.py
+```
 
 Los usuarios creados manualmente desde la web se pierden y hay que registrarlos otra vez.
 
 ---
 
-* Usuarios de prueba
+## Usuarios de prueba
 
-Cliente:
+### Cliente
 
-Email: anas@email.com  
-Contraseña: Password1  
+**Email:** anas@email.com  
+**Contraseña:** Password1
 
-Administrador:
+### Administrador
 
-Email: admin@email.com  
-Contraseña: Password1  
+**Email:** admin@email.com  
+**Contraseña:** Password1
 
 Las contraseñas tienen que cumplir validación fuerte:
 
-mínimo 8 caracteres  
-una letra mayúscula  
-una letra minúscula  
-un número  
+- mínimo 8 caracteres
+- una letra mayúscula
+- una letra minúscula
+- un número
 
 ---
 
-* Mejoras hechas
+## Mejoras hechas
 
 En este proyecto he añadido:
 
@@ -313,9 +337,9 @@ En este proyecto he añadido:
 - validaciones en el backend
 - validación fuerte de contraseña
 - contraseñas cifradas
-- archivo config.js para guardar la URL del backend
-- archivo .env para variables privadas
-- archivo .env.example como plantilla
+- archivo `config.js` para guardar la URL del backend
+- archivo `.env` para variables privadas
+- archivo `.env.example` como plantilla
 - diseño responsive con Bootstrap
 - página de favoritos
 - filtros y búsqueda de viajes
@@ -325,14 +349,16 @@ En este proyecto he añadido:
 
 ---
 
-* Archivos que no se suben
+## Archivos que no se suben
 
 No se suben al repositorio:
 
-.env  
-__pycache__/  
-*.pyc  
-venv/  
+```text
+.env
+__pycache__/
+*.pyc
+venv/
+```
 
 Estos archivos están ignorados con `.gitignore`.
 
@@ -340,19 +366,21 @@ El archivo `.env` no se sube porque contiene claves y datos privados.
 
 ---
 
-* Repositorio
+## Repositorio
 
 El proyecto está guardado en GitHub como proyecto personal.
 
 Para subir cambios nuevos uso:
 
-**git add .**  
-**git commit -m "mensaje del cambio"**  
-**git push origin main**
+```bash
+git add .
+git commit -m "mensaje del cambio"
+git push origin main
+```
 
 ---
 
-* Estado actual
+## Estado actual
 
 El proyecto funciona como una aplicación fullstack de viajes.
 
