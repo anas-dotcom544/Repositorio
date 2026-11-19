@@ -8,9 +8,9 @@ It allows users to view trips, register, log in, log out, manage trips from the 
 
 The project connects a frontend built with HTML, CSS, JavaScript, and Bootstrap to a backend built with Flask and a PostgreSQL database running with Docker.
 
-----
+---
 
-* Technologies Used
+## Technologies Used
 
 - HTML
 - CSS
@@ -24,7 +24,9 @@ The project connects a frontend built with HTML, CSS, JavaScript, and Bootstrap 
 - JWT
 - Git and GitHub
 
-* Project Structure
+---
+
+## Project Structure
 
 ```text
 fase4_fullstack/
@@ -69,27 +71,29 @@ fase4_fullstack/
     └── img/
 ```
 
-* What the Application Does
+---
+
+## What the Application Does
 
 The application allows users to:
 
-view available trips  
-view featured trips  
-register  
-log in  
-log out  
-view the profile of the logged-in user  
-create trips  
-edit trips  
-delete trips  
-mark trips as favorites  
-search and filter trips  
-view favorite trips on a separate page  
+- View available trips
+- View featured trips
+- Register
+- Log in
+- Log out
+- View the profile of the logged-in user
+- Create trips
+- Edit trips
+- Delete trips
+- Mark trips as favorites
+- Search and filter trips
+- View favorite trips on a separate page
 
 It also has users with different roles:
 
-client  
-admin  
+- Client
+- Admin
 
 Clients can manage their own trips.
 
@@ -97,16 +101,16 @@ Administrators can view and manage more trips.
 
 ---
 
-* Database
+## Database
 
 I use PostgreSQL as the database.
 
 The main tables are:
 
-usuarios  
-roles  
-viajes  
-costes_pais  
+- `usuarios`
+- `roles`
+- `viajes`
+- `costes_pais`
 
 The usuarios table stores registered users.
 
@@ -120,39 +124,43 @@ The database runs with Docker.
 
 In my case, I use external port 5433 to avoid conflicts with other PostgreSQL installations on the computer.
 
-Recommended settings for DBeaver:
+### Recommended Settings for DBeaver
 
-Host: 127.0.0.1  
-Port: 5433  
-Database: planificador_viajes  
-Username: user  
-Password: 123456  
+```text
+Host: 127.0.0.1
+Port: 5433
+Database: planificador_viajes
+Username: user
+Password: 123456
+```
 
 ---
 
-* Environment Variables
+## Environment Variables
 
 The `.env` file is used to store private information and is not uploaded to the repository.
 
 To show which variables the project requires, I have included a `.env.example` file.
 
-Example:
+### Example
 
-DB_HOST=127.0.0.1  
-DB_PORT=5433  
-DB_NAME=planificador_viajes  
-DB_USER=user  
-DB_PASSWORD=123456  
+```env
+DB_HOST=127.0.0.1
+DB_PORT=5433
+DB_NAME=planificador_viajes
+DB_USER=user
+DB_PASSWORD=123456
 
-FLASK_SECRET_KEY=cambia_esta_clave  
-JWT_SECRET_KEY=cambia_esta_clave_jwt  
-JWT_EXPIRATION_HOURS=2  
+FLASK_SECRET_KEY=cambia_esta_clave
+JWT_SECRET_KEY=cambia_esta_clave_jwt
+JWT_EXPIRATION_HOURS=2
+```
 
 ---
 
-* Security
+## Security
 
-The Flask secret key is no longer written directly in app.py. It is now read from the `.env` file.
+The Flask secret key is no longer written directly in `app.py`. It is now read from the `.env` file.
 
 User passwords are stored securely using hashing.
 
@@ -160,76 +168,86 @@ During login, the hashed password is verified instead of comparing plain text pa
 
 JWT has also been added to improve how the application works as a REST API.
 
-When a user logs in, the backend returns a token, and the frontend stores it in localStorage.
+When a user logs in, the backend returns a token, and the frontend stores it in `localStorage`.
 
-After that, to create, edit, delete, or save favorites, the frontend sends the token in the Authorization header.
+After that, to create, edit, delete, or save favorites, the frontend sends the token in the `Authorization` header.
 
 Flask sessions are also still used as additional support.
 
 ---
 
-* Main Endpoints
+## Main Endpoints
 
-**Users**
+### Users
 
-POST /auth/signup  
+**POST `/auth/signup`**  
 Registers a new user.
 
-POST /auth/login  
+**POST `/auth/login`**  
 Logs in and returns a JWT token.
 
-GET /auth/perfil  
+**GET `/auth/perfil`**  
 Returns the logged-in user.
 
-POST /auth/logout  
+**POST `/auth/logout`**  
 Logs out.
 
-GET /auth/admin  
+**GET `/auth/admin`**  
 Protected route for administrators only.
 
-**Trips**
+### Trips
 
-GET /viajes  
+**GET `/viajes`**  
 Returns the trips.
 
-GET /viajes/destacados  
+**GET `/viajes/destacados`**  
 Returns the featured trips.
 
-GET /viajes/<id>  
+**GET `/viajes/<id>`**  
 Returns a specific trip.
 
-POST /viajes  
+**POST `/viajes`**  
 Creates a new trip. The user must be logged in.
 
-PUT /viajes/<id>  
+**PUT `/viajes/<id>`**  
 Edits a trip. The user must be logged in.
 
-DELETE /viajes/<id>  
+**DELETE `/viajes/<id>`**  
 Deletes a trip. The user must be logged in.
 
 ---
 
-* How to Run the Project
+## How to Run the Project
 
 First, I start the database with Docker:
 
-**docker compose up -d**
+```bash
+docker compose up -d
+```
 
 Then I create the tables:
 
-**python migration.py**
+```bash
+python migration.py
+```
 
 Next, I insert the initial data:
 
-**python insertar_datos.py**
+```bash
+python insertar_datos.py
+```
 
 I create the administrator user:
 
-**python crear_admin.py**
+```bash
+python crear_admin.py
+```
 
 Finally, I start Flask:
 
-**python app.py**
+```bash
+python app.py
+```
 
 The backend runs at:
 
@@ -239,100 +257,108 @@ To open the frontend, I use the HTML files located inside the frontend folder.
 
 For example:
 
-frontend/index.html  
-frontend/viajes.html  
-frontend/login.html  
-frontend/signup.html  
+- `frontend/index.html`
+- `frontend/viajes.html`
+- `frontend/login.html`
+- `frontend/signup.html`
 
 ---
 
-* If the Database Is Deleted
+## If the Database Is Deleted
 
 If I run:
 
-**docker compose down**
+```bash
+docker compose down
+```
 
 the container is removed, but the data is usually preserved because the volume still exists.
 
 If I run:
 
-**docker compose down -v**
+```bash
+docker compose down -v
+```
 
 the volume is also deleted, and all tables, trips, and users are lost.
 
 After deleting the volume, the following commands must be run again:
 
-**python migration.py**  
-**python crear_admin.py**  
-**python insertar_datos.py**
+```bash
+python migration.py
+python crear_admin.py
+python insertar_datos.py
+```
 
 Users created manually through the website are lost and must register again.
 
 ---
 
-* Test Users
+## Test Users
 
-Client:
+### Client
 
-Email: anas@email.com  
-Password: Password1  
+**Email:** anas@email.com  
+**Password:** Password1
 
-Administrator:
+### Administrator
 
-Email: admin@email.com  
-Password: Password1  
+**Email:** admin@email.com  
+**Password:** Password1
 
 Passwords must meet strong validation requirements:
 
-minimum 8 characters  
-one uppercase letter  
-one lowercase letter  
-one number  
+- Minimum 8 characters
+- One uppercase letter
+- One lowercase letter
+- One number
 
 ---
 
-* Improvements Made
+## Improvements Made
 
 In this project, I have added:
 
-- connection between frontend and backend
-- registration and login
-- logout
-- logged-in user profile
+- Connection between frontend and backend
+- Registration and login
+- Logout
+- Logged-in user profile
 - Flask sessions
 - JWT
-- client and administrator roles
-- separate roles table
-- permissions to edit and delete trips
-- decorator to protect administrator routes
+- Client and administrator roles
+- Separate roles table
+- Permissions to edit and delete trips
+- Decorator to protect administrator routes
 - PostgreSQL connection
 - Docker to run the database
-- use of DBeaver to inspect the database
-- initial data in the seed folder
-- table for costs by country
-- backend validations
-- strong password validation
-- hashed passwords
-- config.js file to store the backend URL
-- .env file for private variables
-- .env.example file as a template
-- responsive design with Bootstrap
-- favorites page
-- trip filters and search
-- pagination
-- modals for notifications and confirmations
-- visual improvements to buttons, forms, and cards
+- Use of DBeaver to inspect the database
+- Initial data in the seed folder
+- Table for costs by country
+- Backend validations
+- Strong password validation
+- Hashed passwords
+- `config.js` file to store the backend URL
+- `.env` file for private variables
+- `.env.example` file as a template
+- Responsive design with Bootstrap
+- Favorites page
+- Trip filters and search
+- Pagination
+- Modals for notifications and confirmations
+- Visual improvements to buttons, forms, and cards
 
 ---
 
-* Files That Are Not Uploaded
+## Files That Are Not Uploaded
 
 The following files are not uploaded to the repository:
 
-.env  
-__pycache__/  
-*.pyc  
-venv/  
+```text
+.env
+__pycache__/
+*.pyc
+venv/
+```
 
 These files are ignored using `.gitignore`.
 
@@ -340,19 +366,21 @@ The `.env` file is not uploaded because it contains private keys and information
 
 ---
 
-* Repository
+## Repository
 
 The project is stored on GitHub as a personal project.
 
 To upload new changes, I use:
 
-**git add .**  
-**git commit -m "commit message"**  
-**git push origin main**
+```bash
+git add .
+git commit -m "commit message"
+git push origin main
+```
 
 ---
 
-* Current Status
+## Current Status
 
 The project works as a full-stack travel application.
 
