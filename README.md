@@ -1,3 +1,5 @@
+**English** | [🇪🇸 Español](README.es.md)
+
 # Travel Planner Project
 
 This project is a full-stack travel planning application.
