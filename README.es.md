@@ -1,4 +1,4 @@
-[🇬🇧 English](README.md) | **Español**
+[EN](README.md) | **ES**
 
 # Proyecto Planificador de Viajes
 
