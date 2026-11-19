@@ -1,14 +1,14 @@
-# Proyecto Planificador de Viajes
+# Travel Planner Project
 
-Este proyecto es una aplicación fullstack de planificación de viajes.
+This project is a full-stack travel planning application.
 
-Permite ver viajes, registrarse, iniciar sesión, cerrar sesión, gestionar viajes desde el navegador y marcar viajes como favoritos.
+It allows users to view trips, register, log in, log out, manage trips from the browser, and mark trips as favorites.
 
-El proyecto une un frontend hecho con HTML, CSS, JavaScript y Bootstrap con un backend hecho con Flask y una base de datos PostgreSQL levantada con Docker.
+The project connects a frontend built with HTML, CSS, JavaScript, and Bootstrap to a backend built with Flask and a PostgreSQL database running with Docker.
 
 ----
 
-* Tecnologías usadas
+* Technologies Used
 
 - HTML
 - CSS
@@ -20,9 +20,9 @@ El proyecto une un frontend hecho con HTML, CSS, JavaScript y Bootstrap con un b
 - Docker
 - DBeaver
 - JWT
-- Git y GitHub
+- Git and GitHub
 
-* Estructura del proyecto
+* Project Structure
 
 ```text
 fase4_fullstack/
@@ -67,58 +67,58 @@ fase4_fullstack/
     └── img/
 ```
 
-* Qué hace la aplicación
+* What the Application Does
 
-La aplicación permite:
+The application allows users to:
 
-ver viajes disponibles  
-ver viajes destacados  
-registrarse  
-iniciar sesión  
-cerrar sesión  
-ver el perfil del usuario conectado  
-crear viajes  
-editar viajes  
-eliminar viajes  
-marcar viajes como favoritos  
-buscar y filtrar viajes  
-ver viajes favoritos en una página separada  
+view available trips  
+view featured trips  
+register  
+log in  
+log out  
+view the profile of the logged-in user  
+create trips  
+edit trips  
+delete trips  
+mark trips as favorites  
+search and filter trips  
+view favorite trips on a separate page  
 
-También tiene usuarios con roles:
+It also has users with different roles:
 
-cliente  
+client  
 admin  
 
-El cliente puede gestionar sus propios viajes.
+Clients can manage their own trips.
 
-El administrador puede ver y gestionar más viajes.
+Administrators can view and manage more trips.
 
 ---
 
-* Base de datos 
+* Database
 
-Uso PostgreSQL como base de datos.
+I use PostgreSQL as the database.
 
-Las tablas principales son:
+The main tables are:
 
 usuarios  
 roles  
 viajes  
 costes_pais  
 
-La tabla usuarios guarda los usuarios registrados.
+The usuarios table stores registered users.
 
-La tabla roles guarda los roles disponibles de la aplicación.
+The roles table stores the available roles in the application.
 
-La tabla viajes guarda la información de los viajes.
+The viajes table stores trip information.
 
-La tabla costes_pais guarda el coste diario de cada país. Esto sirve para calcular el presupuesto si el usuario no lo escribe manualmente.
+The costes_pais table stores the daily cost for each country. This is used to calculate the budget if the user does not enter it manually.
 
-La base de datos se levanta con Docker.
+The database runs with Docker.
 
-En mi caso uso el puerto externo 5433 para evitar conflictos con otros PostgreSQL instalados en el ordenador.
+In my case, I use external port 5433 to avoid conflicts with other PostgreSQL installations on the computer.
 
-Datos recomendados para DBeaver:
+Recommended settings for DBeaver:
 
 Host: 127.0.0.1  
 Port: 5433  
@@ -128,13 +128,13 @@ Password: 123456
 
 ---
 
-* Variables de entorno
+* Environment Variables
 
-El archivo `.env` se usa para guardar datos privados y no se sube al repositorio.
+The `.env` file is used to store private information and is not uploaded to the repository.
 
-Para saber qué variables necesita el proyecto he dejado un archivo `.env.example`.
+To show which variables the project requires, I have included a `.env.example` file.
 
-Ejemplo:
+Example:
 
 DB_HOST=127.0.0.1  
 DB_PORT=5433  
@@ -148,94 +148,94 @@ JWT_EXPIRATION_HOURS=2
 
 ---
 
-* Seguridad
+* Security
 
-La clave secreta de Flask ya no está escrita directamente en app.py, ahora se lee desde el archivo `.env`.
+The Flask secret key is no longer written directly in app.py. It is now read from the `.env` file.
 
-Las contraseñas de los usuarios se guardan cifradas usando hash.
+User passwords are stored securely using hashing.
 
-En el login se comprueba la contraseña cifrada y no se compara texto plano.
+During login, the hashed password is verified instead of comparing plain text passwords.
 
-También se ha añadido JWT para trabajar mejor como API REST.
+JWT has also been added to improve how the application works as a REST API.
 
-Cuando el usuario inicia sesión, el backend devuelve un token y el frontend lo guarda en localStorage.
+When a user logs in, the backend returns a token, and the frontend stores it in localStorage.
 
-Después, para crear, editar, eliminar o guardar favoritos, el frontend manda el token en la cabecera Authorization.
+After that, to create, edit, delete, or save favorites, the frontend sends the token in the Authorization header.
 
-También se siguen usando sesiones de Flask como apoyo.
+Flask sessions are also still used as additional support.
 
 ---
 
-* Endpoints principales
+* Main Endpoints
 
-**Usuarios**
+**Users**
 
 POST /auth/signup  
-Registra un usuario nuevo.
+Registers a new user.
 
 POST /auth/login  
-Inicia sesión y devuelve un token JWT.
+Logs in and returns a JWT token.
 
 GET /auth/perfil  
-Devuelve el usuario conectado.
+Returns the logged-in user.
 
 POST /auth/logout  
-Cierra la sesión.
+Logs out.
 
 GET /auth/admin  
-Ruta protegida solo para administradores.
+Protected route for administrators only.
 
-**Viajes**
+**Trips**
 
 GET /viajes  
-Devuelve los viajes.
+Returns the trips.
 
 GET /viajes/destacados  
-Devuelve los viajes destacados.
+Returns the featured trips.
 
 GET /viajes/<id>  
-Devuelve un viaje concreto.
+Returns a specific trip.
 
 POST /viajes  
-Crea un viaje nuevo. Hay que estar logueado.
+Creates a new trip. The user must be logged in.
 
 PUT /viajes/<id>  
-Edita un viaje. Hay que estar logueado.
+Edits a trip. The user must be logged in.
 
 DELETE /viajes/<id>  
-Elimina un viaje. Hay que estar logueado.
+Deletes a trip. The user must be logged in.
 
 ---
 
-* Cómo ejecutar el proyecto
+* How to Run the Project
 
-Primero levanto la base de datos con Docker:
+First, I start the database with Docker:
 
 **docker compose up -d**
 
-Después creo las tablas:
+Then I create the tables:
 
 **python migration.py**
 
-Luego inserto los datos iniciales:
+Next, I insert the initial data:
 
 **python insertar_datos.py**
 
-Creo el usuario administrador:
+I create the administrator user:
 
 **python crear_admin.py**
 
-Y por último inicio Flask:
+Finally, I start Flask:
 
 **python app.py**
 
-El backend se ejecuta en:
+The backend runs at:
 
 http://127.0.0.1:5000
 
-Para abrir el frontend uso los archivos HTML que están dentro de la carpeta frontend.
+To open the frontend, I use the HTML files located inside the frontend folder.
 
-Por ejemplo:
+For example:
 
 frontend/index.html  
 frontend/viajes.html  
@@ -244,118 +244,118 @@ frontend/signup.html
 
 ---
 
-* Si se borra la base de datos
+* If the Database Is Deleted
 
-Si ejecuto:
+If I run:
 
 **docker compose down**
 
-se borra el contenedor, pero normalmente se mantienen los datos porque el volumen sigue existiendo.
+the container is removed, but the data is usually preserved because the volume still exists.
 
-Si ejecuto:
+If I run:
 
 **docker compose down -v**
 
-se borra también el volumen y se pierden las tablas, viajes y usuarios.
+the volume is also deleted, and all tables, trips, and users are lost.
 
-Después de borrar el volumen hay que ejecutar otra vez:
+After deleting the volume, the following commands must be run again:
 
 **python migration.py**  
 **python crear_admin.py**  
 **python insertar_datos.py**
 
-Los usuarios creados manualmente desde la web se pierden y hay que registrarlos otra vez.
+Users created manually through the website are lost and must register again.
 
 ---
 
-* Usuarios de prueba
+* Test Users
 
-Cliente:
+Client:
 
 Email: anas@email.com  
-Contraseña: Password1  
+Password: Password1  
 
-Administrador:
+Administrator:
 
 Email: admin@email.com  
-Contraseña: Password1  
+Password: Password1  
 
-Las contraseñas tienen que cumplir validación fuerte:
+Passwords must meet strong validation requirements:
 
-mínimo 8 caracteres  
-una letra mayúscula  
-una letra minúscula  
-un número  
+minimum 8 characters  
+one uppercase letter  
+one lowercase letter  
+one number  
 
 ---
 
-* Mejoras hechas
+* Improvements Made
 
-En este proyecto he añadido:
+In this project, I have added:
 
-- conexión entre frontend y backend
-- registro y login
+- connection between frontend and backend
+- registration and login
 - logout
-- perfil de usuario conectado
-- sesiones con Flask
+- logged-in user profile
+- Flask sessions
 - JWT
-- roles de cliente y administrador
-- tabla roles separada
-- permisos para editar y eliminar viajes
-- decorador para proteger rutas de administrador
-- conexión con PostgreSQL
-- Docker para levantar la base de datos
-- uso de DBeaver para revisar la base de datos
-- datos iniciales en la carpeta seed
-- tabla para los costes por país
-- validaciones en el backend
-- validación fuerte de contraseña
-- contraseñas cifradas
-- archivo config.js para guardar la URL del backend
-- archivo .env para variables privadas
-- archivo .env.example como plantilla
-- diseño responsive con Bootstrap
-- página de favoritos
-- filtros y búsqueda de viajes
-- paginación
-- modales para avisos y confirmaciones
-- mejoras visuales en botones, formularios y tarjetas
+- client and administrator roles
+- separate roles table
+- permissions to edit and delete trips
+- decorator to protect administrator routes
+- PostgreSQL connection
+- Docker to run the database
+- use of DBeaver to inspect the database
+- initial data in the seed folder
+- table for costs by country
+- backend validations
+- strong password validation
+- hashed passwords
+- config.js file to store the backend URL
+- .env file for private variables
+- .env.example file as a template
+- responsive design with Bootstrap
+- favorites page
+- trip filters and search
+- pagination
+- modals for notifications and confirmations
+- visual improvements to buttons, forms, and cards
 
 ---
 
-* Archivos que no se suben
+* Files That Are Not Uploaded
 
-No se suben al repositorio:
+The following files are not uploaded to the repository:
 
 .env  
 __pycache__/  
 *.pyc  
 venv/  
 
-Estos archivos están ignorados con `.gitignore`.
+These files are ignored using `.gitignore`.
 
-El archivo `.env` no se sube porque contiene claves y datos privados.
+The `.env` file is not uploaded because it contains private keys and information.
 
 ---
 
-* Repositorio
+* Repository
 
-El proyecto está guardado en GitHub como proyecto personal.
+The project is stored on GitHub as a personal project.
 
-Para subir cambios nuevos uso:
+To upload new changes, I use:
 
 **git add .**  
-**git commit -m "mensaje del cambio"**  
+**git commit -m "commit message"**  
 **git push origin main**
 
 ---
 
-* Estado actual
+* Current Status
 
-El proyecto funciona como una aplicación fullstack de viajes.
+The project works as a full-stack travel application.
 
-Permite trabajar con frontend, backend y base de datos juntos.
+It allows the frontend, backend, and database to work together.
 
-También tiene autenticación, roles, JWT, favoritos, filtros, paginación y mejoras visuales.
+It also includes authentication, roles, JWT, favorites, filters, pagination, and visual improvements.
 
-Todavía se podría mejorar, pero ya tiene una estructura completa para un proyecto fullstack de 1º DAW.
+There is still room for improvement, but it already has a complete structure for a first-year Higher Vocational Training project in Web Application Development (DAW).
