@@ -1,4 +1,4 @@
-**English** | [🇪🇸 Español](README.es.md)
+**EN** | [ES](README.es.md)
 
 # Travel Planner Project
 
